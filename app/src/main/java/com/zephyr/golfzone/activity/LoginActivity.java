@@ -75,12 +75,13 @@ public class LoginActivity extends AppCompatActivity {
             public void onClick(View view) {
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
+                String empty_fields = getString(R.string.empty_fields);
 
                 // Check for empty data in the form
                 if (email.isEmpty() || password.isEmpty()) {
                     // Prompt user to enter credentials
                     Toast.makeText(getApplicationContext(),
-                            "Please enter the credentials!", Toast.LENGTH_LONG)
+                            empty_fields, Toast.LENGTH_LONG)
                             .show();
                 }else {
                     // login user
@@ -107,10 +108,13 @@ public class LoginActivity extends AppCompatActivity {
      * function to verify login details in mysql db
      * */
     private void checkLogin(final String email, final String password) {
+
+        String logging_in = getString(R.string.logging_in);
+
         // Tag used to cancel the request
         String tag_string_req = "req_login";
 
-        pDialog.setMessage("Logging in ...");
+        pDialog.setMessage(logging_in);
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -122,6 +126,7 @@ public class LoginActivity extends AppCompatActivity {
                 hideDialog();
 
                 try {
+                    String wrong_credentials = getString(R.string.wrong_credentials);
                     JSONObject jObj = new JSONObject(response);
                     boolean error = jObj.getBoolean("error");
 
@@ -143,6 +148,10 @@ public class LoginActivity extends AppCompatActivity {
                         // Inserting row in users table
                         db.addUser(unique_user_id, firstname, lastname, email, created_at);
 
+                        String success_login = getString(R.string.success_login);
+
+                        Toast.makeText(getApplicationContext(), success_login, Toast.LENGTH_LONG).show();
+
                         // Launch main activity
                         Intent intent = new Intent(LoginActivity.this,
                                 MainActivity.class);
@@ -150,14 +159,15 @@ public class LoginActivity extends AppCompatActivity {
                         finish();
                     } else {
                         // Error in login. Get the error message
-                        String errorMsg = jObj.getString("error_message");
-                        Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
+                        Toast.makeText(getApplicationContext(), wrong_credentials, Toast.LENGTH_LONG).show();
+
+                        //String errorMsg = jObj.getString("error_message");
+                        //Toast.makeText(getApplicationContext(),errorMsg, Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
-                    Toast.makeText(getApplicationContext(), "Improper Login Credentials! ", Toast.LENGTH_LONG).show();
+                    Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }
         }, new Response.ErrorListener() {

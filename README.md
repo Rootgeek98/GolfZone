@@ -1,2 +1,2 @@
 # GolfZone
- Mobile App
+ This ia mobile app developed using volley

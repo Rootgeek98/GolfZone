@@ -23,4 +23,13 @@
     <string name="weekdays">" 8am - 5pm "</string>
     <string name="saturdays">, 8am - 12pm</string>
     <string name="daily">" 8am - 10pm"</string>
+    <string name="empty_fields">Empty credentials. Please Try again.</string>
+    <string name="wrong_credentials">Wrong credentials. Please Try again.</string>
+    <string name="logging_in">Logging in ......</string>
+    <string name="success_signup">Account successfully created. Please login now.</string>
+    <string name="signup_error">Unknown error occurred during registration. Please ensure you have input your correct details</string>
+    <string name="creating_account">Creating Account ......</string>
+    <string name="empty_details">Please fill your personal details.</string>
+    <string name="short_password">Your password should have a minimum of 8 characters</string>
+    <string name="success_login">You have successfully logged in to your account.</string>
 </resources>

@@ -47,13 +47,13 @@ public class SignupActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_signup);
 
-        inputFirstName = (EditText) findViewById(R.id.firstname);
-        inputLastName = (EditText) findViewById(R.id.lastname);
-        inputEmail = (EditText) findViewById(R.id.email);
-        inputPassword = (EditText) findViewById(R.id.password);
-        inputConfirmPassword = (EditText) findViewById(R.id.confirm_password);
-        btnRegister = (Button) findViewById(R.id.btnRegister);
-        btnLinkToLogin = (Button) findViewById(R.id.btnLinkToLoginScreen);
+        inputFirstName = findViewById(R.id.firstname);
+        inputLastName = findViewById(R.id.lastname);
+        inputEmail = findViewById(R.id.email);
+        inputPassword = findViewById(R.id.password);
+        inputConfirmPassword = findViewById(R.id.confirm_password);
+        btnRegister = findViewById(R.id.btnRegister);
+        btnLinkToLogin = findViewById(R.id.btnLinkToLoginScreen);
 
         // Progress dialog
         pDialog = new ProgressDialog(this);
@@ -82,20 +82,18 @@ public class SignupActivity extends AppCompatActivity {
                 String email = inputEmail.getText().toString().trim();
                 String password = inputPassword.getText().toString().trim();
                 String confirm_password = inputConfirmPassword.getText().toString().trim();
+                String empty_details = getString(R.string.empty_details);
+                String short_password = getString(R.string.short_password);
 
                 if (firstname.isEmpty() || lastname.isEmpty() || email.isEmpty() || password.isEmpty() || confirm_password.isEmpty()) {
                     Toast.makeText(getApplicationContext(),
-                            "Please enter your details!", Toast.LENGTH_LONG)
+                            empty_details, Toast.LENGTH_LONG)
                             .show();
                 } else if (password.length() < 8){
                     Toast.makeText(getApplicationContext(),
-                            "Your password must be at least 8 characters in length!", Toast.LENGTH_LONG)
+                            short_password, Toast.LENGTH_LONG)
                             .show();
-                }else if (!password.equals(confirm_password)){
-                    Toast.makeText(getApplicationContext(),
-                            "Your passwords do not match!", Toast.LENGTH_LONG)
-                            .show();
-                } else {
+                }else {
                     registerUser(firstname, lastname, email, password, confirm_password);
                 }
             }
@@ -123,7 +121,9 @@ public class SignupActivity extends AppCompatActivity {
         // Tag used to cancel the request
         String tag_string_req = "req_register";
 
-        pDialog.setMessage("Registering ...");
+        String creating_account = getString(R.string.creating_account);
+
+        pDialog.setMessage(creating_account);
         showDialog();
 
         StringRequest strReq = new StringRequest(Request.Method.POST,
@@ -152,7 +152,9 @@ public class SignupActivity extends AppCompatActivity {
                         // Inserting row in users table
                         db.addUser(unique_user_id, firstname, lastname, email, created_at);
 
-                        Toast.makeText(getApplicationContext(), "User successfully registered. Try login now!", Toast.LENGTH_LONG).show();
+                        String success_signup = getString(R.string.success_signup);
+
+                        Toast.makeText(getApplicationContext(), success_signup, Toast.LENGTH_LONG).show();
 
                         // Launch login activity
                         Intent intent = new Intent(SignupActivity.this, LoginActivity.class);
@@ -162,9 +164,11 @@ public class SignupActivity extends AppCompatActivity {
 
                         // Error occurred in registration. Get the error
                         // message
-                        String errorMsg = jObj.getString("error_message");
+                        String signup_error = getString(R.string.signup_error);
+                        //String errorMsg = jObj.getString("error_message");
+                        //Toast.makeText(getApplicationContext(), errorMsg, Toast.LENGTH_LONG).show();
                         Toast.makeText(getApplicationContext(),
-                                errorMsg, Toast.LENGTH_LONG).show();
+                                signup_error, Toast.LENGTH_LONG).show();
                     }
                 } catch (JSONException e) {
                     e.printStackTrace();
