@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="app_name">Golf Zone</string>
+    <string name="hint_email">Barua Pepe</string>
+    <string name="hint_password">Neno Siri</string>
+    <string name="hint_confirm_password">Thibitisha Neno Siri</string>
+    <string name="hint_firstname">Jina la Kwanza</string>
+    <string name="hint_lastname">Jina la Mwisho</string>
+    <string name="btn_login">Ingia</string>
+    <string name="btn_register">Jisajili</string>
+    <string name="label_login">Ingia</string>
+    <string name="label_signup">Jisajili</string>
+    <string name="btn_link_to_register">Sio mwanachama? Fungua akaunti.</string>
+    <string name="btn_link_to_login">Tayari umesajiliwa! Ingia Hapa.</string>
+    <string name="welcome">Karibu kwa Golf Zone</string>
+    <string name="firstname">Jina la Kwanza</string>
+    <string name="lastname">Jina la Mwisho</string>
+    <string name="btn_dashboard">Tazama Vilabu vya Gofu</string>
+    <string name="btn_logout">Ondoka</string>
+    <string name="address">Anwani :</string>
+    <string name="website">Tovuti :</string>
+    <string name="hours">"Masaa :  "</string>
+    <string name="contact">" Nambari ya Simu :"</string>
+    <string name="weekdays">" 8 asubuhi - 5 jioni"</string>
+    <string name="saturdays">, 8 asubuhi - 12 mchana</string>
+    <string name="daily">" 8 asubuhi - 10 usiku"</string>
+</resources>
