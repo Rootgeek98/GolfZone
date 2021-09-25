@@ -11,4 +11,6 @@ public class AppConfig {
 
     public static final String URL_REGISTER = "https://hole-in-one.000webhostapp.com/golf_zone/register.php";
 
+    public static final String SHARED_PREF = "golf_zone";
+
 }

@@ -24,12 +24,12 @@
     <string name="weekdays">" 8 asubuhi - 5 jioni"</string>
     <string name="saturdays">, 8 asubuhi - 12 mchana</string>
     <string name="daily">" 8 asubuhi - 10 usiku"</string>
-    <string name="empty_fields">Kitambulisho tupu. Jaribu  tena.</string>
-    <string name="wrong_credentials">Kitambulisho kibaya. Jaribu tena.</string>
+    <string name="empty_fields">Haujajaza vitambulisho vyako. Jaribu  tena.</string>
+    <string name="wrong_credentials">Vitambulisho havifanani. Jaribu tena.</string>
     <string name="logging_in">Kuingia ......</string>
-    <string name="success_signup">Akaunti imefanikiwa. Tafadhali ingia sasa.</string>
-    <string name="signup_error">Hitilafu isiyojulikana ilitokea wakati wa usajili. Tafadhali hakikisha umeingiza maelezo yako sahihi</string>
-    <string name="creating_account">Kuunda Akaunti ......</string>
+    <string name="success_signup">Umefanikiwa kufungua akaunti.</string>
+    <string name="signup_error">Hitilafu isiyojulikana ilitokea wakati wa usajili. Tafadhali hakikisha umejaza vitambulisho vyako sahihi</string>
+    <string name="creating_account">Kufungua Akaunti ......</string>
     <string name="empty_details">Tafadhali jaza maelezo yako ya kibinafsi.</string>
     <string name="short_password">Nenosiri lako linapaswa kuwa na herufi 8</string>
     <string name="success_login">Umefanyikiwa kuingia kwa accounti yako.</string>

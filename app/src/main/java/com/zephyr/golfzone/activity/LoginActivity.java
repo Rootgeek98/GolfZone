@@ -21,6 +21,7 @@ import com.zephyr.golfzone.app.AppConfig;
 import com.zephyr.golfzone.app.AppController;
 import com.zephyr.golfzone.helper.SQLiteHandler;
 import com.zephyr.golfzone.helper.SessionManager;
+import com.zephyr.golfzone.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -32,14 +33,13 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity {
 
-    private static final String TAG = SignupActivity.class.getSimpleName();
+    private static final String TAG = LoginActivity.class.getSimpleName();
     private Button btnLogin;
     private Button btnLinkToRegister;
     private EditText inputEmail;
     private EditText inputPassword;
     private ProgressDialog pDialog;
     private SessionManager session;
-    private SQLiteHandler db;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -55,14 +55,11 @@ public class LoginActivity extends AppCompatActivity {
         pDialog = new ProgressDialog(this);
         pDialog.setCancelable(false);
 
-        // SQLite database handler
-        db = new SQLiteHandler(getApplicationContext());
-
         // Session manager
         session = new SessionManager(getApplicationContext());
 
         // Check if user is already logged in or not
-        if (session.isLoggedIn()) {
+        if (AppController.getInstance().getSessionManager().getUser() != null) {
             // User is already logged in. Take him to main activity
             Intent intent = new Intent(LoginActivity.this, MainActivity.class);
             startActivity(intent);
@@ -128,25 +125,22 @@ public class LoginActivity extends AppCompatActivity {
                 try {
                     String wrong_credentials = getString(R.string.wrong_credentials);
                     JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
 
                     // Check for error node in json
-                    if (!error) {
+                    if (jObj.getString("error").equals("false")) {
                         // user successfully logged in
                         // Create login session
                         session.setLogin(true);
 
-                        // Now store the user in SQLite
+                        JSONObject userObj = jObj.getJSONObject("user");
+                        User user = new User(userObj.getString("unique_user_id"),
+                                userObj.getString("firstname"),
+                                userObj.getString("lastname"),
+                                userObj.getString("email"),
+                                userObj.getString("created_at"));
 
-                        JSONObject user = jObj.getJSONObject("user");
-                        String unique_user_id = user.getString("unique_user_id");
-                        String firstname = user.getString("firstname");
-                        String lastname = user.getString("lastname");
-                        String email = user.getString("email");
-                        String created_at = user.getString("created_at");
-
-                        // Inserting row in users table
-                        db.addUser(unique_user_id, firstname, lastname, email, created_at);
+                        // Storing user in shared preferences
+                        AppController.getInstance().getSessionManager().storeUser(user);
 
                         String success_login = getString(R.string.success_login);
 
@@ -161,12 +155,13 @@ public class LoginActivity extends AppCompatActivity {
                         // Error in login. Get the error message
                         Toast.makeText(getApplicationContext(), wrong_credentials, Toast.LENGTH_LONG).show();
 
-                        //String errorMsg = jObj.getString("error_message");
-                        //Toast.makeText(getApplicationContext(),errorMsg, Toast.LENGTH_LONG).show();
+                        String errorMsg = jObj.getString("error_message");
+                        Log.e(TAG, errorMsg);
                     }
                 } catch (JSONException e) {
                     // JSON error
                     e.printStackTrace();
+                    //Log.e()
                     Toast.makeText(getApplicationContext(), "Json error: " + e.getMessage(), Toast.LENGTH_LONG).show();
                 }
             }

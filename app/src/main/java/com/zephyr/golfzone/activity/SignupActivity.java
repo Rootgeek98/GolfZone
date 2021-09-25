@@ -20,6 +20,7 @@ import com.zephyr.golfzone.app.AppConfig;
 import com.zephyr.golfzone.app.AppController;
 import com.zephyr.golfzone.helper.SQLiteHandler;
 import com.zephyr.golfzone.helper.SessionManager;
+import com.zephyr.golfzone.model.User;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -136,21 +137,19 @@ public class SignupActivity extends AppCompatActivity {
 
                 try {
                     JSONObject jObj = new JSONObject(response);
-                    boolean error = jObj.getBoolean("error");
-                    if (!error) {
+
+                    if (jObj.getString("error").equals("false")) {
                         // User successfully stored in MySQL
-                        // Now store the user in sqlite
-                        //String unique_user_id = jObj.getString("unique_user_id");
 
-                        JSONObject user = jObj.getJSONObject("user");
-                        String unique_user_id = user.getString("unique_user_id");
-                        String firstname = user.getString("firstname");
-                        String lastname = user.getString("lastname");
-                        String email = user.getString("email");
-                        String created_at = user.getString("created_at");
+                        JSONObject userObj = jObj.getJSONObject("user");
+                        User user = new User(userObj.getString("unique_user_id"),
+                                userObj.getString("firstname"),
+                                userObj.getString("lastname"),
+                                userObj.getString("email"),
+                                userObj.getString("created_at"));
 
-                        // Inserting row in users table
-                        db.addUser(unique_user_id, firstname, lastname, email, created_at);
+                        // Storing user in shared preferences
+                        AppController.getInstance().getSessionManager().storeUser(user);
 
                         String success_signup = getString(R.string.success_signup);
 
