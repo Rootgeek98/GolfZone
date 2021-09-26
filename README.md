@@ -10,6 +10,8 @@ https://user-images.githubusercontent.com/32403606/134827058-938e12d9-6261-4c43-
 >
 - Login and Register Pages
 >
+- Welcome Page
+>
 - Localization (English and Swahili Languages)
 >
 
